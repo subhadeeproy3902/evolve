@@ -40,7 +40,7 @@ export function Header() {
           </div>
           <span className="text-muted-foreground">/</span>
           <div className="flex items-center gap-1.5 text-foreground">
-            <span>Devops Saas</span>
+            <span>Landing page for LMNOQ</span>
             <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
           </div>
         </div>

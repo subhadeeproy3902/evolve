@@ -105,7 +105,7 @@ const Preview = () => {
         </WebPreviewNavigationButton>
       </WebPreviewNavigation>
 
-      <WebPreviewBody src="https://opus-devops.lovable.app" />
+      <WebPreviewBody src="https://aura-devs.vercel.app/preview/lmnoq" />
     </WebPreview>
   );
 };
