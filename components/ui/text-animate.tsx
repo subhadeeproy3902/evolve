@@ -366,7 +366,7 @@ const TextAnimateBase = ({
   const shouldWrapWords = by === "character";
   let segments: string[] = [];
   let wordGroups: string[][] = [];
-  
+
   switch (by) {
     case "word":
       segments = children.split(/(\s+)/);
@@ -374,7 +374,7 @@ const TextAnimateBase = ({
     case "character":
       // Split by words first to preserve word boundaries
       const words = children.split(/(\s+)/);
-      wordGroups = words.map(word => word.split(""));
+      wordGroups = words.map((word) => word.split(""));
       break;
     case "line":
       segments = children.split("\n");
@@ -385,8 +385,8 @@ const TextAnimateBase = ({
       break;
   }
 
-  const totalSegments = shouldWrapWords 
-    ? wordGroups.flat().length 
+  const totalSegments = shouldWrapWords
+    ? wordGroups.flat().length
     : segments.length;
 
   const finalVariants = variants
@@ -412,27 +412,27 @@ const TextAnimateBase = ({
         item: variants,
       }
     : animation
-    ? {
-        container: {
-          ...defaultItemAnimationVariants[animation].container,
-          show: {
-            ...defaultItemAnimationVariants[animation].container.show,
-            transition: {
-              delayChildren: delay,
-              staggerChildren: duration / totalSegments,
+      ? {
+          container: {
+            ...defaultItemAnimationVariants[animation].container,
+            show: {
+              ...defaultItemAnimationVariants[animation].container.show,
+              transition: {
+                delayChildren: delay,
+                staggerChildren: duration / totalSegments,
+              },
+            },
+            exit: {
+              ...defaultItemAnimationVariants[animation].container.exit,
+              transition: {
+                staggerChildren: duration / totalSegments,
+                staggerDirection: -1,
+              },
             },
           },
-          exit: {
-            ...defaultItemAnimationVariants[animation].container.exit,
-            transition: {
-              staggerChildren: duration / totalSegments,
-              staggerDirection: -1,
-            },
-          },
-        },
-        item: defaultItemAnimationVariants[animation].item,
-      }
-    : { container: defaultContainerVariants, item: defaultItemVariants };
+          item: defaultItemAnimationVariants[animation].item,
+        }
+      : { container: defaultContainerVariants, item: defaultItemVariants };
 
   return (
     <AnimatePresence mode="popLayout">
@@ -448,45 +448,47 @@ const TextAnimateBase = ({
         {...props}
       >
         {accessible && <span className="sr-only">{children}</span>}
-        {shouldWrapWords ? (
-          // Character animation with word wrapping
-          wordGroups.map((word, wordIndex) => (
-            <span key={`word-${wordIndex}`} className="inline-block whitespace-pre">
-              {word.map((char, charIndex) => {
-                const globalIndex = wordGroups
-                  .slice(0, wordIndex)
-                  .reduce((acc, w) => acc + w.length, 0) + charIndex;
-                return (
-                  <motion.span
-                    key={`char-${wordIndex}-${charIndex}`}
-                    variants={finalVariants.item}
-                    custom={globalIndex * staggerTimings[by]}
-                    className={cn("inline-block", segmentClassName)}
-                    aria-hidden={accessible ? true : undefined}
-                  >
-                    {char}
-                  </motion.span>
-                );
-              })}
-            </span>
-          ))
-        ) : (
-          // Other animation types
-          segments.map((segment, i) => (
-            <motion.span
-              key={`${by}-${segment}-${i}`}
-              variants={finalVariants.item}
-              custom={i * staggerTimings[by]}
-              className={cn(
-                by === "line" ? "block" : "inline-block whitespace-pre",
-                segmentClassName
-              )}
-              aria-hidden={accessible ? true : undefined}
-            >
-              {segment}
-            </motion.span>
-          ))
-        )}
+        {shouldWrapWords
+          ? // Character animation with word wrapping
+            wordGroups.map((word, wordIndex) => (
+              <span
+                key={`word-${wordIndex}`}
+                className="inline-block whitespace-pre"
+              >
+                {word.map((char, charIndex) => {
+                  const globalIndex =
+                    wordGroups
+                      .slice(0, wordIndex)
+                      .reduce((acc, w) => acc + w.length, 0) + charIndex;
+                  return (
+                    <motion.span
+                      key={`char-${wordIndex}-${charIndex}`}
+                      variants={finalVariants.item}
+                      custom={globalIndex * staggerTimings[by]}
+                      className={cn("inline-block", segmentClassName)}
+                      aria-hidden={accessible ? true : undefined}
+                    >
+                      {char}
+                    </motion.span>
+                  );
+                })}
+              </span>
+            ))
+          : // Other animation types
+            segments.map((segment, i) => (
+              <motion.span
+                key={`${by}-${segment}-${i}`}
+                variants={finalVariants.item}
+                custom={i * staggerTimings[by]}
+                className={cn(
+                  by === "line" ? "block" : "inline-block whitespace-pre",
+                  segmentClassName,
+                )}
+                aria-hidden={accessible ? true : undefined}
+              >
+                {segment}
+              </motion.span>
+            ))}
       </MotionComponent>
     </AnimatePresence>
   );

@@ -36,7 +36,7 @@ export function Header() {
         <div className="rounded-md p-2 hidden items-center justify-between gap-1 md:flex">
           <NavbarLogo imageClassName="w-6! h-6! mr-2" textClassName="hidden!" />
 					<div className="flex items-center gap-1.5 text-muted-foreground">
-            <span>subhadeeproy3902</span>
+            <span>JohnDoe</span>
           </div>
           <span className="text-muted-foreground">/</span>
           <div className="flex items-center gap-1.5 text-foreground">

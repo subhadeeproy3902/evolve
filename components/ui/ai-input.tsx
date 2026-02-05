@@ -10,7 +10,15 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
-import { AlertTriangle, ArrowUp, Cloud, FileArchive, Gauge, Camera } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowUp,
+  Cloud,
+  FileArchive,
+  Gauge,
+  Camera,
+} from "lucide-react";
+import Link from "next/link";
 import { useRef, useState } from "react";
 
 const PROMPTS = [
@@ -58,17 +66,15 @@ const MODELS = [
   },
 ];
 
-export default function AIInput(
-  {
-    showPrompts = true,
-    className,
-    cardClassName,
-  }: {
-    showPrompts?: boolean;
-    className?: string;
-    cardClassName?: string;
-  }
-) {
+export default function AIInput({
+  showPrompts = true,
+  className,
+  cardClassName,
+}: {
+  showPrompts?: boolean;
+  className?: string;
+  cardClassName?: string;
+}) {
   const [inputValue, setInputValue] = useState("");
   const [selectedModel, setSelectedModel] = useState(MODELS[0]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -105,9 +111,19 @@ export default function AIInput(
   );
 
   return (
-    <div className={cn("flex flex-col gap-4 max-w-2xl mx-auto w-full z-50 mt-10", className)}>
+    <div
+      className={cn(
+        "flex flex-col gap-4 max-w-2xl mx-auto w-full z-50 mt-10",
+        className,
+      )}
+    >
       <div className="p-3 rounded-3xl glass-card">
-        <div className={cn("flex min-h-40 flex-col rounded-xl cursor-text bg-card border-0", cardClassName)}>
+        <div
+          className={cn(
+            "flex min-h-40 flex-col rounded-xl cursor-text bg-card border-0",
+            cardClassName,
+          )}
+        >
           <div className="flex-1 relative overflow-y-auto max-h-80">
             <Textarea
               ref={inputRef}
@@ -164,50 +180,48 @@ export default function AIInput(
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="text-muted-foreground hover:text-foreground transition-colors duration-100 ease-out"
                 title="Attach images"
                 aria-label="Attach images"
               >
                 <Camera className="h-5 w-5" />
               </Button>
-
-              <Button
-                variant="ghost"
-                size="icon-sm"
-                className={cn(
-                  "rounded-full transition-colors duration-100 ease-out cursor-pointer bg-primary",
-                  inputValue && "bg-primary hover:bg-primary/90!"
-                )}
-                disabled={!inputValue}
-                aria-label="Send message"
-              >
-                <ArrowUp className="h-4 w-4 text-primary-foreground" />
-              </Button>
+              <Link href={"/project"}>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className={cn(
+                    "rounded-xl bg-linear-to-b from-orange-400 via-orange-500 to-rose-500",
+                    inputValue && "bg-primary hover:bg-primary/90!",
+                  )}
+                  disabled={!inputValue}
+                  aria-label="Send message"
+                >
+                  <ArrowUp className="h-4 w-4 text-primary-foreground" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
       </div>
 
-      {
-        showPrompts && (
-
-          <div className="flex flex-wrap justify-center gap-2">
-            {PROMPTS.map((button) => {
-              const IconComponent = button.icon;
-              return (
-                <Button
-                  key={button.text}
-                  variant="secondary"
-                  className="group flex items-center gap-2 rounded-full px-3 py-2 text-sm text-foreground transition-all ease-in-out duration-500"
-                  onClick={() => handlePromptClick(button.prompt)}
-                >
-                  <IconComponent className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-foreground" />
-                  <span>{button.text}</span>
-                </Button>
-              );
-            })}
-          </div>
-        )}
+      {showPrompts && (
+        <div className="flex flex-wrap justify-center gap-2">
+          {PROMPTS.map((button) => {
+            const IconComponent = button.icon;
+            return (
+              <Button
+                key={button.text}
+                variant="secondary"
+                className="group flex items-center gap-2 rounded-full px-3 py-2 text-sm text-foreground transition-all ease-in-out duration-500"
+                onClick={() => handlePromptClick(button.prompt)}
+              >
+                <IconComponent className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-foreground" />
+                <span>{button.text}</span>
+              </Button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

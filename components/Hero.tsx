@@ -1,6 +1,5 @@
-import { dmsans } from "@/lib/fonts";
+/* eslint-disable @next/next/no-img-element */
 import { TextAnimate } from "./ui/text-animate";
-import { cn } from "@/lib/utils";
 import AIInput from "./ui/ai-input";
 
 export default function Hero() {
@@ -20,15 +19,12 @@ export default function Hero() {
           animation="blurInUp"
           by="character"
           once
-          className={cn(
-            "tracking-tighter text-foreground text-3xl sm:text-5xl md:text-6xl max-w-4xl px-2 py-2 overflow-clip z-10 font-medium",
-            dmsans.className
-          )}
+          className="text-foreground text-3xl sm:text-5xl md:text-6xl max-w-4xl px-2 py-2 overflow-clip z-10 font-medium"
+          segmentClassName="-mx-[0.04em]"
           duration={1}
         >
           What do you want to build?
         </TextAnimate>
-
         <AIInput />
       </div>
     </div>
