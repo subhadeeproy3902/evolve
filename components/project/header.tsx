@@ -1,10 +1,10 @@
 "use client";
 import { useScroll } from "@/hooks/use-scroll";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { MobileNav } from "./mobile-nav";
 import { NavbarLogo } from "../ui/resizable-navbar";
-import { ChevronDown, Github, Globe, Lock } from "lucide-react";
+import { ChevronDown, Globe, Lock } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 
 export const navLinks = [
